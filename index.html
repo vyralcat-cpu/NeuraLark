@@ -92,17 +92,15 @@
         </div>
       </div>
 
-      <!-- HERO IMAGE -->
+      <!-- HERO IMAGE (no forced square, respects original ratio) -->
       <div class="relative">
         <div class="absolute -inset-6 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none"></div>
         <div class="relative rounded-3xl border border-cyan-400/40 bg-slate-900/70 p-5 shadow-xl shadow-cyan-500/20 flex items-center justify-center">
-          <div class="aspect-square w-full rounded-2xl overflow-hidden border border-slate-800 bg-black">
-            <img
-              src="https://github.com/vyralcat-cpu/NeuraLark/raw/main/lark-bird.png"
-              class="w-full h-full object-contain rounded-2xl"
-              alt="NeuraLark JesterBird"
-            />
-          </div>
+          <img
+            src="https://github.com/vyralcat-cpu/NeuraLark/raw/main/lark-bird.png"
+            class="w-full h-auto max-h-[480px] rounded-2xl border border-slate-800 object-contain"
+            alt="NeuraLark JesterBird"
+          />
         </div>
       </div>
     </section>
