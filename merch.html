@@ -118,7 +118,7 @@
 
         <div class="grid md:grid-cols-3 gap-5 text-sm text-slate-200">
           <!-- Item 1 -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col">
+          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col merch-item" data-usd-price="22">
             <div class="rounded-xl bg-slate-900/80 border border-slate-800 h-32 mb-3 flex items-center justify-center text-[11px] text-slate-500">
               JesterBird Front-Print Tee<br /><span class="text-[10px]">Mockup slot</span>
             </div>
@@ -126,14 +126,18 @@
             <p class="text-[12px] text-slate-300 mb-3">
               Black tee with the full jester-bird chest print. Minimal text, max chaos energy.
             </p>
-            <div class="mt-auto flex items-center justify-between text-[11px] text-slate-400">
+            <div class="mt-auto flex flex-col gap-1 text-[11px] text-slate-400">
               <span>Colors: Black / Charcoal</span>
               <span>Sizes: S–XXL</span>
+              <span class="mt-1 text-cyan-300">
+                <span class="js-price-sol">–.--</span> SOL
+                <span class="text-slate-400">(~$<span class="js-price-usd">--.--</span>)</span>
+              </span>
             </div>
           </div>
 
           <!-- Item 2 -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col">
+          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col merch-item" data-usd-price="40">
             <div class="rounded-xl bg-slate-900/80 border border-slate-800 h-32 mb-3 flex items-center justify-center text-[11px] text-slate-500">
               Oversized Hoodie<br /><span class="text-[10px]">Mockup slot</span>
             </div>
@@ -141,14 +145,18 @@
             <p class="text-[12px] text-slate-300 mb-3">
               Heavyweight hoodie with back print: NeuraLark sitting on a throne of charts and liquidations.
             </p>
-            <div class="mt-auto flex items-center justify-between text-[11px] text-slate-400">
+            <div class="mt-auto flex flex-col gap-1 text-[11px] text-slate-400">
               <span>Colors: Black / Midnight</span>
               <span>Sizes: S–XXL</span>
+              <span class="mt-1 text-cyan-300">
+                <span class="js-price-sol">–.--</span> SOL
+                <span class="text-slate-400">(~$<span class="js-price-usd">--.--</span>)</span>
+              </span>
             </div>
           </div>
 
           <!-- Item 3 -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col">
+          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col merch-item" data-usd-price="18">
             <div class="rounded-xl bg-slate-900/80 border border-slate-800 h-32 mb-3 flex items-center justify-center text-[11px] text-slate-500">
               Dad Hat / Snapback<br /><span class="text-[10px]">Mockup slot</span>
             </div>
@@ -156,9 +164,13 @@
             <p class="text-[12px] text-slate-300 mb-3">
               Low-key cap with a small embroidered NeuraLark head logo. Perfect for pretending you didn’t FOMO.
             </p>
-            <div class="mt-auto flex items-center justify-between text-[11px] text-slate-400">
+            <div class="mt-auto flex flex-col gap-1 text-[11px] text-slate-400">
               <span>Styles: Dad / Snapback</span>
               <span>One Size</span>
+              <span class="mt-1 text-cyan-300">
+                <span class="js-price-sol">–.--</span> SOL
+                <span class="text-slate-400">(~$<span class="js-price-usd">--.--</span>)</span>
+              </span>
             </div>
           </div>
         </div>
@@ -204,6 +216,40 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    async function updateMerchPrices() {
+      const items = document.querySelectorAll('.merch-item');
+      if (!items.length) return;
+
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+        const data = await res.json();
+        const solPriceUsd = data?.solana?.usd;
+
+        if (!solPriceUsd || !isFinite(solPriceUsd)) {
+          throw new Error('Invalid SOL price');
+        }
+
+        items.forEach((item) => {
+          const baseUsd = parseFloat(item.getAttribute('data-usd-price')) || 15;
+          const usd = Math.max(15, baseUsd); // always at least $15
+          const sol = usd / solPriceUsd;
+
+          const solEl = item.querySelector('.js-price-sol');
+          const usdEl = item.querySelector('.js-price-usd');
+
+          if (solEl) solEl.textContent = sol.toFixed(3);
+          if (usdEl) usdEl.textContent = usd.toFixed(2);
+        });
+      } catch (err) {
+        console.error('Failed to update merch prices:', err);
+        // Fallback: show TBD so the UI doesn't look broken
+        document.querySelectorAll('.js-price-sol').forEach(el => el.textContent = 'TBD');
+        document.querySelectorAll('.js-price-usd').forEach(el => el.textContent = '15.00+');
+      }
+    }
+
+    updateMerchPrices();
   </script>
 </body>
 </html>
