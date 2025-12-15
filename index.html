@@ -45,7 +45,8 @@
     "smartContractAddress": "G2EbwAfYcSDJnTmLunvcJcXCKPURc5X1SJqHCdbXN6Lf",
     "sameAs": [
       "https://x.com/NeuraLarkAI",
-      "https://t.me/NeuraLark"
+      "https://t.me/NeuraLark",
+      "https://discord.gg/5qSQubsnm"
     ]
   }
   </script>
@@ -78,6 +79,7 @@
       <nav class="hidden md:flex items-center gap-6 text-sm text-slate-200">
         <a href="#about" class="hover:text-cyan-400">About</a>
         <a href="#tokenomics" class="hover:text-cyan-400">Tokenomics</a>
+        <a href="#burn" class="hover:text-cyan-400">Burn</a>
         <a href="#buy" class="hover:text-cyan-400">Buy Now</a>
         <a href="#farm" class="hover:text-cyan-400">Farm</a>
         <a href="#roadmap" class="hover:text-cyan-400">Roadmap</a>
@@ -89,6 +91,11 @@
         <a href="https://t.me/NeuraLark" target="_blank" class="px-3 py-1.5 rounded-full text-xs font-medium border border-slate-700/80 hover:border-cyan-400/80 hover:text-cyan-300 transition">
           Telegram
         </a>
+
+        <a href="https://discord.gg/5qSQubsnm" target="_blank" class="px-3 py-1.5 rounded-full text-xs font-medium border border-slate-700/80 hover:border-cyan-400/80 hover:text-cyan-300 transition">
+          Discord
+        </a>
+
         <a href="https://x.com/NeuraLarkAI" target="_blank" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition shadow-lg shadow-cyan-500/30">
           Follow on X
         </a>
@@ -123,6 +130,9 @@
           <a href="https://t.me/NeuraLark" target="_blank" class="px-5 py-2.5 rounded-full border border-slate-700/80 text-sm font-medium text-slate-100 hover:border-cyan-400/80 hover:text-cyan-300 transition">
             Join the Telegram
           </a>
+          <a href="https://discord.gg/5qSQubsnm" target="_blank" class="px-5 py-2.5 rounded-full border border-slate-700/80 text-sm font-medium text-slate-100 hover:border-cyan-400/80 hover:text-cyan-300 transition">
+            Join Discord
+          </a>
           <a href="https://x.com/NeuraLarkAI" target="_blank" class="px-5 py-2.5 rounded-full border border-slate-700/80 text-sm font-medium text-slate-100 hover:border-cyan-400/80 hover:text-cyan-300 transition">
             Follow $LARK on X
           </a>
@@ -156,6 +166,10 @@
         <button class="tab-button px-3 py-1.5 rounded-full text-slate-300 hover:text-cyan-300 hover:bg-slate-800/80"
                 data-tab-target="tokenomics">
           Tokenomics
+        </button>
+        <button class="tab-button px-3 py-1.5 rounded-full text-slate-300 hover:text-cyan-300 hover:bg-slate-800/80"
+                data-tab-target="burn">
+          🔥 Burn
         </button>
         <button class="tab-button px-3 py-1.5 rounded-full text-slate-300 hover:text-cyan-300 hover:bg-slate-800/80"
                 data-tab-target="slark">
@@ -217,6 +231,91 @@
              class="px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-xs hover:border-cyan-400 hover:text-cyan-300 transition">
             View on Birdeye
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BURN TRACKER -->
+    <section id="burn" class="border-t border-slate-800/80 bg-slate-950/70">
+      <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+        <div class="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl md:text-2xl font-bold text-slate-50 mb-1">🔥 Burn Tracker</h2>
+            <p class="text-sm md:text-base text-slate-300/90">
+              1B $LARK will be burned once BOTH conditions are met:
+              <span class="text-cyan-300 font-semibold">50 holders</span> and
+              <span class="text-cyan-300 font-semibold">$5,000+ daily volume</span>.
+            </p>
+          </div>
+
+          <div class="text-right">
+            <div id="burn-status-pill"
+                 class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-amber-400/50 bg-slate-950/80 text-[11px] font-semibold text-amber-200">
+              ⏳ QUEUED
+            </div>
+            <div class="text-[11px] text-slate-500 mt-2">
+              Auto-refreshes every 60s
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <!-- Holders -->
+          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-5">
+            <div class="text-xs text-slate-400 mb-1">Holders</div>
+            <div class="text-2xl font-semibold text-cyan-300">
+              <span id="holders-now">—</span><span class="text-slate-500 text-base"> / 50</span>
+            </div>
+            <div class="mt-3">
+              <div class="h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div id="holders-bar" class="h-2 bg-cyan-500/80" style="width: 0%"></div>
+              </div>
+              <div class="mt-2 text-[11px] text-slate-500">
+                Source: on-chain unique holders (serverless endpoint)
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Volume -->
+          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-5">
+            <div class="text-xs text-slate-400 mb-1">24h Volume</div>
+            <div class="text-2xl font-semibold text-cyan-300">
+              $<span id="vol-now">—</span><span class="text-slate-500 text-base"> / 5,000</span>
+            </div>
+            <div class="mt-3">
+              <div class="h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div id="vol-bar" class="h-2 bg-cyan-500/80" style="width: 0%"></div>
+              </div>
+              <div class="mt-2 text-[11px] text-slate-500">
+                Source: DexScreener (best-liquidity pool)
+              </div>
+            </div>
+          </div>
+
+          <!-- Burn Details -->
+          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-5">
+            <div class="text-xs text-slate-400 mb-1">Burn Amount</div>
+            <div class="text-2xl font-semibold text-cyan-300">1,000,000,000</div>
+            <div class="text-[11px] text-slate-500 mt-1">$LARK scheduled burn</div>
+
+            <div class="mt-4 rounded-xl border border-slate-800 bg-slate-900/40 p-3 text-[12px] text-slate-300/90 leading-relaxed">
+              ✅ From <span class="text-cyan-300 font-semibold">Burn Reserve</span><br/>
+              ✅ Executed via <span class="text-cyan-300 font-semibold">SPL burn instruction</span><br/>
+              ✅ <span class="text-cyan-300 font-semibold">LP never touched</span><br/>
+              ✅ Proof posted in Discord + Solscan once executed
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl bg-slate-950/60 border border-cyan-400/20 p-4">
+          <div class="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300 mb-2">
+            Rules Locked
+          </div>
+          <div class="text-sm text-slate-300/90 leading-relaxed">
+            Burn triggers only when <span class="text-cyan-300 font-semibold">50 holders</span> AND
+            <span class="text-cyan-300 font-semibold">$5k+ daily volume</span> are both reached.
+            No taxes. No minting. No LP burns. No mid-stream rule changes.
+          </div>
         </div>
       </div>
     </section>
@@ -305,7 +404,7 @@
             Pepe’s chaos and an AI neural core. It lives on Solana and feeds on engagement.
           </p>
           <p class="text-sm md:text-base text-slate-300/90 mb-3">
-            The NeuraLark universe turns every reaction, raid, and degen thought into evolving lore — 
+            The NeuraLark universe turns every reaction, raid, and degen thought into evolving lore —
             the jester-bird is the face of the chaos, and $LARK is the fuel behind it.
           </p>
         </div>
@@ -400,255 +499,6 @@
       </div>
     </section>
 
-    <!-- sLARK COMING SOON -->
-    <section id="slark" class="border-t border-slate-800/80 bg-slate-950/70">
-      <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
-        <div class="flex items-center justify-between mb-6">
-          <div>
-            <h2 class="text-xl md:text-2xl font-bold text-slate-50 mb-1">$sLARK – Coming Soon</h2>
-            <p class="text-sm md:text-base text-slate-300/90">
-              The staked evolution of $LARK. More vibes, more yield, more neural chaos.
-            </p>
-          </div>
-          <div class="hidden md:flex items-center">
-            <span class="px-3 py-1.5 text-[11px] rounded-full border border-slate-700/80 text-slate-300">
-              Not Live Yet
-            </span>
-          </div>
-        </div>
-
-        <!-- Info blocks -->
-        <div class="grid md:grid-cols-3 gap-4 text-sm text-slate-200">
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-5">
-            <div class="text-lg font-semibold text-cyan-300 mb-2">$sLARK = Super LARK</div>
-            <p class="text-[13px] text-slate-300/90 leading-relaxed">
-              Stake $LARK → Receive $sLARK, an upgraded form that tracks your share of the staked pool.
-              The longer you stay, the more the jester-bird works in your favor.
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-5">
-            <div class="text-lg font-semibold text-cyan-300 mb-2">Auto-Accruing Power</div>
-            <p class="text-[13px] text-slate-300/90 leading-relaxed">
-              $sLARK is designed to grow relative to $LARK as the pool expands. Think staked yield with a
-              full NeuraLark personality layer on top.
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-5">
-            <div class="text-lg font-semibold text-cyan-300 mb-2">LARK’s Version of mSOL</div>
-            <p class="text-[13px] text-slate-300/90 leading-relaxed">
-              Similar concept to mSOL for Solana — but for the LARK ecosystem. $sLARK is the staked
-              expression of the jester-bird: smarter, shinier, and more deranged.
-            </p>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <div class="mt-8 text-center">
-          <span class="inline-block rounded-full px-4 py-2 text-xs font-semibold border border-cyan-400/40 text-cyan-300 bg-slate-900/60 shadow-lg shadow-cyan-500/20">
-            Launching After Main LP Goes Live
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FARM SECTION -->
-    <section id="farm" class="border-t border-slate-800/80 bg-slate-950/80">
-      <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
-        <div class="flex items-center justify-between gap-4 mb-6">
-          <div>
-            <h2 class="text-xl md:text-2xl font-bold text-slate-50 mb-1">Farm $LARK LP</h2>
-            <p class="text-sm md:text-base text-slate-300/90">
-              Stake your LP, earn $LARK. A future farming UI for the NeuraLark chaos engine.
-            </p>
-          </div>
-          <button
-            class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500 hover:bg-cyan-400 text-xs font-semibold text-slate-950 shadow-lg shadow-cyan-500/40 transition"
-          >
-            <span>Connect Wallet</span>
-          </button>
-        </div>
-
-        <!-- Mobile connect button -->
-        <div class="md:hidden mb-4">
-          <button
-            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-cyan-500 hover:bg-cyan-400 text-xs font-semibold text-slate-950 shadow-lg shadow-cyan-500/40 transition"
-          >
-            <span>Connect Wallet</span>
-          </button>
-        </div>
-
-        <!-- Top metrics -->
-        <div class="grid md:grid-cols-3 gap-4 mb-6 text-sm text-slate-200">
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-4">
-            <div class="text-xs text-slate-400 mb-1">Live APR</div>
-            <div class="text-2xl font-semibold text-cyan-300">–.–%</div>
-            <div class="text-[11px] text-slate-500 mt-1">Updates once farm is live.</div>
-          </div>
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-4">
-            <div class="text-xs text-slate-400 mb-1">Pool TVL</div>
-            <div class="text-xl font-semibold text-cyan-300">– – –</div>
-            <div class="text-[11px] text-slate-500 mt-1">Total value locked in LP.</div>
-          </div>
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-4">
-            <div class="text-xs text-slate-400 mb-1">My Staked LP</div>
-            <div class="text-xl font-semibold text-cyan-300">0.00</div>
-            <div class="text-[11px] text-slate-500 mt-1">Connect wallet to view.</div>
-          </div>
-        </div>
-
-        <!-- Main farm UI -->
-        <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-200">
-          <!-- Stake / Unstake -->
-          <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-4 flex flex-col gap-4">
-            <div class="flex items-center justify-between">
-              <div class="font-semibold text-cyan-300">Stake LP Tokens</div>
-              <div class="text-[11px] text-slate-400">LARK / SOL LP</div>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex items-center justify-between text-[11px] text-slate-400">
-                <span>Wallet LP Balance:</span>
-                <span>0.00</span>
-              </div>
-
-              <div class="bg-slate-900/80 border border-slate-800 rounded-xl px-3 py-3 flex items-center gap-3">
-                <input
-                  type="text"
-                  placeholder="0.00"
-                  class="flex-1 bg-transparent text-sm text-slate-100 placeholder:text-slate-500 outline-none"
-                />
-                <button class="text-[11px] px-2 py-1 rounded-full border border-slate-700 hover:border-cyan-400/80 hover:text-cyan-300 transition">
-                  MAX
-                </button>
-              </div>
-
-              <div class="grid grid-cols-2 gap-2 mt-1">
-                <button
-                  class="inline-flex items-center justify-center px-3 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-xs font-semibold text-slate-950 shadow-md shadow-cyan-500/40 transition"
-                >
-                  Stake LP
-                </button>
-                <button
-                  class="inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-700 hover:border-cyan-400/80 text-xs font-semibold text-slate-100 transition"
-                >
-                  Unstake LP
-                </button>
-              </div>
-            </div>
-
-            <p class="text-[11px] text-slate-500 mt-2">
-              This is a visual UI only for now. Smart contracts + live data hook in once the farm contract is deployed.
-            </p>
-          </div>
-
-          <!-- Rewards + Pool Stats -->
-          <div class="space-y-4">
-            <!-- Rewards -->
-            <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-4">
-              <div class="flex items-center justify-between mb-3">
-                <div class="font-semibold text-cyan-300">Claim Rewards</div>
-                <div class="text-[11px] text-slate-400">Rewards in $LARK</div>
-              </div>
-
-              <div class="bg-slate-900/80 border border-slate-800 rounded-xl px-3 py-3 mb-3">
-                <div class="text-[11px] text-slate-400 mb-1">Pending Rewards</div>
-                <div class="text-lg font-semibold text-cyan-300">0.0000 $LARK</div>
-              </div>
-
-              <button
-                class="w-full inline-flex items-center justify-center px-3 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-xs font-semibold text-slate-950 shadow-md shadow-cyan-500/40 transition"
-              >
-                Claim Rewards
-              </button>
-
-              <p class="text-[11px] text-slate-500 mt-2">
-                Rewards will accumulate based on the farm APR, your share of the pool, and how long your LP stays staked.
-              </p>
-            </div>
-
-            <!-- Pool Stats -->
-            <div class="rounded-2xl bg-slate-950 border border-slate-800 px-4 py-4">
-              <div class="font-semibold text-cyan-300 mb-2">Pool Stats</div>
-              <div class="grid grid-cols-2 gap-2 text-[11px] md:text-[12px]">
-                <div class="space-y-1">
-                  <div class="text-slate-400">Pool</div>
-                  <div class="text-slate-100">LARK / SOL</div>
-                </div>
-                <div class="space-y-1">
-                  <div class="text-slate-400">Reward Token</div>
-                  <div class="text-slate-100">$LARK</div>
-                </div>
-                <div class="space-y-1">
-                  <div class="text-slate-400">Lock Period</div>
-                  <div class="text-slate-100">Flexible (TBD)</div>
-                </div>
-                <div class="space-y-1">
-                  <div class="text-slate-400">Fee</div>
-                  <div class="text-slate-100">TBD</div>
-                </div>
-                <div class="space-y-1">
-                  <div class="text-slate-400">Farm Status</div>
-                  <div class="text-amber-300">Preparing Launch</div>
-                </div>
-                <div class="space-y-1">
-                  <div class="text-slate-400">Network</div>
-                  <div class="text-cyan-300">Solana</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ROADMAP -->
-    <section id="roadmap" class="border-t border-slate-800/80 bg-black">
-      <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
-        <h2 class="text-xl md:text-2xl font-bold text-slate-50 mb-6">Roadmap</h2>
-        <div class="grid md:grid-cols-3 gap-5 text-sm text-slate-200">
-          <!-- Phase 1 -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
-            <div class="font-semibold mb-1">Phase 1 – Foundation</div>
-            <p class="text-[11px] text-cyan-300 mb-2">Completed / Active</p>
-            <ul class="list-disc list-inside text-xs space-y-1">
-              <li>Token minted & metadata live</li>
-              <li>Official NeuraLark jester-bird identity locked</li>
-              <li>Website, X, and Telegram online</li>
-              <li>Micro LP deployed to enable trading</li>
-            </ul>
-          </div>
-
-          <!-- Phase 2 -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
-            <div class="font-semibold mb-1">Phase 2 – Growth & Pre-Launch</div>
-            <p class="text-[11px] text-cyan-300 mb-2">Current Focus</p>
-            <ul class="list-disc list-inside text-xs space-y-1">
-              <li>Airdrop waves using the Airdrop Wallet</li>
-              <li>Organic X & Telegram growth, CT raids</li>
-              <li>Publishing transparent tokenomics & wallet structure</li>
-              <li>Preparing infrastructure for sLARK & farming launch</li>
-            </ul>
-          </div>
-
-          <!-- Phase 3 -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
-            <div class="font-semibold mb-1">Phase 3+ – Liquidity & Ecosystem</div>
-            <p class="text-[11px] text-cyan-300 mb-2">Coming Up</p>
-            <ul class="list-disc list-inside text-xs space-y-1">
-              <li>Main LP injection from Liquidity Wallet</li>
-              <li>Deeper integration with Orca / Raydium / aggregators</li>
-              <li>Launch of $sLARK and LP farming</li>
-              <li>Strategic burns from Burn Wallet tied to milestones</li>
-              <li>Long-term ecosystem expansions, collabs, and utilities</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- COMMUNITY -->
     <section id="community" class="border-t border-slate-800/80 bg-slate-950/80">
       <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
@@ -674,12 +524,12 @@
             <span class="text-[11px] text-cyan-300 mt-2">Follow $LARK ↗</span>
           </a>
 
-          <a class="rounded-2xl border border-slate-800 bg-slate-950/40 p-4 opacity-60 cursor-not-allowed">
+          <a href="https://discord.gg/5qSQubsnm" target="_blank" class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 hover:border-cyan-400/80 transition flex flex-col justify-between">
             <div>
-              <div class="text-lg mb-1">📊 DEX Links</div>
-              <p class="text-slate-300/60 text-xs mb-2">Raydium / Orca links will appear here post main LP.</p>
+              <div class="text-lg mb-1">💬 Discord</div>
+              <p class="text-slate-300/90 text-xs mb-2">HQ for raids, burns, and coordination.</p>
             </div>
-            <span class="text-[11px] text-slate-500 mt-2">Soon</span>
+            <span class="text-[11px] text-cyan-300 mt-2">Join the server ↗</span>
           </a>
         </div>
       </div>
@@ -698,6 +548,94 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    // ---- Burn Tracker Config ----
+    const LARK_MINT = "G2EbwAfYcSDJnTmLunvcJcXCKPURc5X1SJqHCdbXN6Lf";
+    const HOLDERS_TARGET = 50;
+    const VOL_TARGET = 5000; // USD, 24h
+
+    const fmtInt = (n) => (Number.isFinite(n) ? Math.round(n).toLocaleString() : "—");
+    const fmtMoney0 = (n) => (Number.isFinite(n) ? Math.round(n).toLocaleString() : "—");
+    const clampPct = (v) => Math.max(0, Math.min(100, v));
+
+    async function fetchDex24hVolumeUSD() {
+      const url = `https://api.dexscreener.com/token-pairs/v1/solana/${LARK_MINT}`;
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("DexScreener fetch failed");
+      const pairs = await res.json();
+      if (!Array.isArray(pairs) || pairs.length === 0) return NaN;
+      pairs.sort((a, b) => (b?.liquidity?.usd ?? 0) - (a?.liquidity?.usd ?? 0));
+      const best = pairs[0];
+      const vol = best?.volume?.h24 ?? NaN;
+      return Number(vol);
+    }
+
+    async function fetchHoldersCount() {
+      const res = await fetch(`/api/holders?mint=${LARK_MINT}`, { cache: "no-store" });
+      if (!res.ok) throw new Error("holders endpoint missing");
+      const data = await res.json();
+      return Number(data?.holders);
+    }
+
+    function setPillReady(isReady) {
+      const pill = document.getElementById("burn-status-pill");
+      if (!pill) return;
+
+      if (isReady) {
+        pill.textContent = "✅ READY TO BURN";
+        pill.className =
+          "inline-flex items-center justify-center px-4 py-2 rounded-full border border-cyan-400/60 bg-slate-950/80 text-[11px] font-semibold text-cyan-200";
+      } else {
+        pill.textContent = "⏳ QUEUED";
+        pill.className =
+          "inline-flex items-center justify-center px-4 py-2 rounded-full border border-amber-400/50 bg-slate-950/80 text-[11px] font-semibold text-amber-200";
+      }
+    }
+
+    async function refreshBurnTracker() {
+      const holdersEl = document.getElementById("holders-now");
+      const volEl = document.getElementById("vol-now");
+      const holdersBar = document.getElementById("holders-bar");
+      const volBar = document.getElementById("vol-bar");
+
+      try {
+        const [holders, vol24] = await Promise.all([
+          fetchHoldersCount(),
+          fetchDex24hVolumeUSD()
+        ]);
+
+        holdersEl.textContent = fmtInt(holders);
+        volEl.textContent = fmtMoney0(vol24);
+
+        const holdersPct = clampPct((holders / HOLDERS_TARGET) * 100);
+        const volPct = clampPct((vol24 / VOL_TARGET) * 100);
+
+        holdersBar.style.width = `${holdersPct}%`;
+        volBar.style.width = `${volPct}%`;
+
+        const ready = holders >= HOLDERS_TARGET && vol24 >= VOL_TARGET;
+        setPillReady(ready);
+      } catch (e) {
+        holdersEl.textContent = "—";
+        volEl.textContent = "—";
+        holdersBar.style.width = "0%";
+        volBar.style.width = "0%";
+        setPillReady(false);
+        console.warn("Burn tracker not ready:", e);
+      }
+    }
+
+    refreshBurnTracker();
+    setInterval(refreshBurnTracker, 60_000);
+
+    // (Optional) Tab buttons scroll to sections
+    document.querySelectorAll(".tab-button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-tab-target");
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
     // Jupiter init for Buy Now
     window.addEventListener("load", function () {
       if (!window.Jupiter) return;
@@ -706,11 +644,8 @@
         displayMode: "integrated",
         integratedTargetId: "lark-buy-terminal",
         formProps: {
-          // SOL (wrapped SOL mint)
           initialInputMint: "So11111111111111111111111111111111111111112",
-          // $LARK mint
-          initialOutputMint: "G2EbwAfYcSDJnTmLunvcJcXCKPURc5X1SJqHCdbXN6Lf",
-          // Lock SOL as input so users always buy LARK
+          initialOutputMint: LARK_MINT,
           fixedMint: "So11111111111111111111111111111111111111112"
         },
         defaultExplorer: "Solscan",
